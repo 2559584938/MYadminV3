@@ -1,0 +1,18 @@
+<div class="tab-pane active">
+
+    <form onsubmit="return false" action="#!" method="post" name="wxappForm" class="edit-form" id="form1">
+        <input type="hidden" name="typename" value="wxapp">
+        <div class="form-group">
+            <label for="appid">Appid</label>
+            <input class="form-control" type="text" id="appid" name="appid" value="{$wxapp.appid|default=''}" placeholder="请输入Appid">
+        </div>
+        <div class="form-group">
+            <label for="appsecret">AppSecret</label>
+            <input class="form-control" type="password" id="appsecret" name="appsecret" value="{$wxapp.appsecret|default=''}" placeholder="请输入AppSecret">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary m-r-5" onclick="post_submit()">确 定</button>
+        </div>
+    </form>
+
+</div>

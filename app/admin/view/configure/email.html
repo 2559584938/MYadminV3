@@ -1,0 +1,43 @@
+<div class="tab-pane active">
+
+    <form onsubmit="return false" action="#!" method="post" name="emailForm" class="edit-form" id="form1">
+        <input type="hidden" name="typename" value="email">
+        <div class="form-group">
+            <label for="username">发送方邮箱</label>
+            <input class="form-control" type="text" id="username" name="username" value="{$email.username|default=''}" placeholder="请输入发送方邮箱">
+        </div>
+        <div class="form-group">
+            <label for="fullname">发送方姓名</label>
+            <input class="form-control" type="text" id="fullname" name="fullname" value="{$email.fullname|default=''}" placeholder="请输入发送方姓名">
+        </div>
+        <div class="form-group">
+            <label for="password">邮箱授权码</label>
+            <input class="form-control" type="password" id="password" name="password" value="{$email.password|default=''}" placeholder="请输入邮箱授权码">
+        </div>
+        <div class="form-group">
+            <label for="host">SMTP服务器</label>
+            <input class="form-control" type="text" id="host" name="host" value="{$email.host|default=''}" placeholder="请输入SMTP服务器地址">
+        </div>
+        <div class="form-group">
+            <label for="port">ssl端口号</label>
+            <input class="form-control" type="text" id="port" name="port" value="{$email.port|default=''}" placeholder="请输入ssl协议方式端口号">
+        </div>
+        <div class="form-group">
+            <label for="subject">验证邮件标题</label>
+            <input class="form-control" type="text" id="subject" name="subject" value="{$email.subject|default=''}" placeholder="请输入邮件标题">
+        </div>
+        <div class="form-group">
+            <label for="body">验证邮件正文</label>
+            <textarea class="form-control" id="body" name="body" value="{$email.body|default=''}" placeholder="请输入邮件正文">{$email.body|default=''}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="notice_email">收取邮箱地址</label>
+            <input class="form-control" type="text" id="notice_email" name="notice_email" value="{$email.notice_email|default=''}" placeholder="请输入收取邮箱地址">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary m-r-5" onclick="post_submit()">确 定</button>
+            <button type="button" class="btn btn-default" onclick="javascript:history.back(-1);return false;">测试邮箱配置</button>
+        </div>
+    </form>
+
+</div>

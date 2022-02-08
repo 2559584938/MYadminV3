@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>{block name="title"}{/block}</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+    <meta name="keywords" content="{:basicConfiguration('keywords')}">
+    <meta name="description" content="{:basicConfiguration('description')}">
+    <meta name="author" content="yinqi">
+    <link href="{__ADMIN_JS__}css/bootstrap.min.css" rel="stylesheet">
+    <link href="{__ADMIN_JS__}css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="{__ADMIN_JS__}css/style.min.css" rel="stylesheet">
+    {block name="css"}{/block}
+</head>
+
+<body>
+<!-- 正文开始 -->
+{block name="body"}{/block}
+<!-- 正文结束 -->
+
+<!-- js部分 -->
+<script type="text/javascript" src="{__ADMIN_JS__}js/jquery.min.js"></script>
+<script type="text/javascript" src="{__ADMIN_JS__}js/popper.min.js"></script>
+<script type="text/javascript" src="{__ADMIN_JS__}js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{__ADMIN_JS__}js/main.min.js"></script>
+<script type="text/javascript" src="{__ADMIN_JS__}js/jquery-confirm/jquery-confirm.min.js"></script>
+{block name="js"}{/block}
+{block name="script"}{/block}
+</body>
+</html>

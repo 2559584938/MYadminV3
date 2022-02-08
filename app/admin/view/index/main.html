@@ -1,0 +1,55 @@
+{extend name="common/base" /}
+{block name="title"}系统首页{/block}
+{block name="body"}
+<div class="container-fluid p-t-15">
+
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th scope="row">系统版本</th>
+                            <td>3.0</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">后端框架</th>
+                            <td>ThinkPHP V{$version}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">主要特色</th>
+                            <td>响应式布局 / 简约 / 易上手 / 完善的多角色权限管理</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">获取渠道</th>
+                            <td>
+                                <button class="btn btn-w-sm btn-round btn-warning" id="yijian">意见反馈</button>
+                                <button class="btn btn-w-sm btn-round btn-info" id="download">立即下载</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+{block name="script"}
+<script>
+    var download=document.getElementById("download");
+    download.onclick=function(){
+        window.open('https://gitee.com/dream-kc/myadmin-v3','_blank');
+    };
+    var download=document.getElementById("yijian");
+    download.onclick=function(){
+        window.open('https://www.wjx.top/vj/mpIIPzg.aspx','_blank');
+    };
+</script>
+{/block}

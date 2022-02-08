@@ -1,0 +1,247 @@
+{extend name="common/base" /}
+{block name="title"}系统配置{/block}
+{block name="css"}
+<link href="{__ADMIN_JS__}js/jquery-confirm/jquery-confirm.min.css" rel="stylesheet">
+<link href="{__ADMIN_JS__}css/animate.min.css" rel="stylesheet">
+{/block}
+{block name="body"}
+<div class="container-fluid p-t-15">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <ul class="nav nav-tabs nav-fill">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#system" aria-selected="true">网站配置</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#storage" aria-selected="false">文件存储</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#email" aria-selected="false">邮箱配置</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#weixin" aria-selected="false">微信公众号</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#wxapp" aria-selected="false">微信小程序</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#wxpay" aria-selected="false">微信支付</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="system" role="tabpanel">
+                            {include file="configure/system" /}
+                        </div>
+                        <div class="tab-pane fade" id="storage" role="tabpanel">
+                            {include file="configure/storage" /}
+                        </div>
+                        <div class="tab-pane fade" id="email" role="tabpanel">
+                            {include file="configure/email" /}
+                        </div>
+                        <div class="tab-pane fade" id="weixin" role="tabpanel">
+                            {include file="configure/weixin" /}
+                        </div>
+                        <div class="tab-pane fade" id="wxapp" role="tabpanel">
+                            {include file="configure/wxapp" /}
+                        </div>
+                        <div class="tab-pane fade" id="wxpay" role="tabpanel">
+                            {include file="configure/wxpay" /}
+                        </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+<script type="text/javascript" src="{__ADMIN_JS__}js/jquery-confirm/jquery-confirm.min.js"></script>
+<script type="text/javascript" src="{__ADMIN_JS__}js/bootstrap-table/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="{__ADMIN_JS__}js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<!--以下是tree-grid的使用示例-->
+<link href="{__ADMIN_JS__}js/jquery-treegrid/jquery.treegrid.min.css" rel="stylesheet">
+<script type="text/javascript" src="{__ADMIN_JS__}js/jquery-treegrid/jquery.treegrid.min.js"></script>
+
+<script type="text/javascript" src="{__ADMIN_JS__}js/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="{__ADMIN_JS__}js/lyear-loading.js"></script>
+{/block}
+{block name="script"}
+<script>
+    $(":radio[name='engine']").click(function(){
+        var index = $(":radio[name='engine']").index($(this));
+        if(index == 0){
+            document.getElementById("qiniu").style.display="none";
+        }else if(index == 1){
+            document.getElementById("qiniu").style.display="";
+        }
+    });
+    $(document).ready(function() {
+        $(document).on('click', '.file-browser', function() {
+            var $browser = $(this);
+            var file = $browser.closest('.file-group').find('[type="file"]');
+            file.on( 'click', function(e) {
+                e.stopPropagation();
+            });
+            file.trigger('click');
+        });
+
+        $(document).on('change', '.file-group [type="file"]', function() {
+            var $this    = $(this);
+            var $input   = $(this)[0];
+            var $len     = $input.files.length;
+            var formFile = new FormData();
+
+            if ($len == 0) {
+                return false;
+            } else {
+                var fileAccaccept = $this.attr('accaccept');
+                var fileType      = $input.files[0].type;
+                var type          = (fileType.substr(fileType.lastIndexOf("/") + 1)).toLowerCase();
+
+                if (!type || fileAccaccept.indexOf(type) == -1) {
+                    jQuery.notify({
+                            icon: '',
+                            message: '您上传图片的类型不符合(.jpg|.jpeg|.gif|.png|.bmp)'
+                        },
+                        {
+                            element: 'body',
+                            type: 'danger',
+                            allow_dismiss: true,
+                            newest_on_top: true,
+                            showProgressbar: false,
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            },
+                            offset: 20,
+                            spacing: 10,
+                            z_index: 10800,
+                            delay: 1000,
+                            animate: {
+                                enter: 'animated shake',
+                                exit: 'animated fadeOutDown'
+                            }
+                        });
+                    return false;
+                }
+                formFile.append("file", $input.files[0]);
+            }
+
+            var data = formFile;
+            var l = $('body').lyearloading({
+                opacity: 0.2,
+                spinnerSize: 'nm'
+            });
+
+            $.ajax({
+                url: '/admin/upload/upload',
+                data: data,
+                type: "POST",
+                dataType: "json",
+                //上传文件无需缓存
+                cache: false,
+                //用于对data参数进行序列化处理 这里必须false
+                processData: false,
+                //必须
+                contentType: false,
+                success: function (res) {
+                    l.destroy();
+                    if (res.code === 1) {
+                        $this.closest('.file-group').find('.file-value').val(res.data.filePath);
+                    } else {
+                        jQuery.notify({
+                                icon: '',
+                                message: res.msg
+                            },
+                            {
+                                element: 'body',
+                                type: 'danger',
+                                allow_dismiss: true,
+                                newest_on_top: true,
+                                showProgressbar: false,
+                                placement: {
+                                    from: 'top',
+                                    align: 'center'
+                                },
+                                offset: 20,
+                                spacing: 10,
+                                z_index: 10800,
+                                delay: 3000,
+                                animate: {
+                                    enter: 'animated shake',
+                                    exit: 'animated fadeOutDown'
+                                }
+                            });
+                    }
+                },
+            });
+        });
+    });
+    function post_submit() {
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/admin/configure/post_submit" ,//url
+            data: $('#form1').serialize(),
+            success: function (res) {
+                console.log(res);//打印服务端返回的数据(调试用)
+                if (res.code === 0) {
+                    $.alert({
+                        title: '成功',
+                        icon: 'mdi mdi-alert',
+                        type: 'blue',
+                        content: res.msg,
+                        buttons: {
+                            okay: {
+                                text: '确认',
+                                btnClass: 'btn-blue',
+                                action: function() {
+
+                                }
+                            }
+                        }
+                    });
+                }else {
+                    $.alert({
+                        title: '错误',
+                        icon: 'mdi mdi-alert',
+                        type: 'red',
+                        content: res.msg,
+                        buttons: {
+                            okay: {
+                                text: '确认',
+                                btnClass: 'btn-blue',
+                                action: function() {
+                                    //$('[alt="captcha"]').click();
+                                }
+                            }
+                        }
+                    });
+                };
+            },
+            error : function() {
+                $.alert({
+                    title: '警告',
+                    content: '请检查返回是否正常！',
+                    icon: 'mdi mdi-access-point-network-off',
+                    animation: 'scale',
+                    closeAnimation: 'scale',
+                    buttons: {
+                        okay: {
+                            text: '确认',
+                            btnClass: 'btn-blue'
+                        }
+                    }
+                });
+            }
+        });
+    }
+</script>
+{/block}

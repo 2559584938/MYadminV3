@@ -1,0 +1,30 @@
+<div class="tab-pane active">
+
+    <form onsubmit="return false" action="#!" method="post" name="wxpayForm" class="edit-form" id="form1">
+        <input type="hidden" name="typename" value="wxpay">
+        <div class="form-group">
+            <label for="appid">Appid</label>
+            <input class="form-control" type="text" id="appid" name="appid" value="{$wxpay.appid|default=''}" placeholder="请输入Appid">
+        </div>
+        <div class="form-group">
+            <label for="mch_id">商户号</label>
+            <input class="form-control" type="text" id="mch_id" name="mch_id" value="{$wxpay.mch_id|default=''}" placeholder="请输入商户号">
+        </div>
+        <div class="form-group">
+            <label for="mch_key">商户密钥</label>
+            <input class="form-control" type="password" id="mch_key" name="mch_key" value="{$wxpay.mch_key|default=''}" placeholder="请输入商户密钥">
+        </div>
+        <div class="form-group">
+            <label for="certpem">CERT证书</label>
+            <textarea class="form-control" id="certpem" name="certpem" placeholder="请粘贴CERT证书">{$wxpay.certpem|default=''}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="keypem">KEY证书</label>
+            <textarea class="form-control" id="keypem" name="keypem" placeholder="请粘贴KEY证书">{$wxpay.keypem|default=''}</textarea>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary m-r-5" onclick="post_submit()">确 定</button>
+        </div>
+    </form>
+
+</div>

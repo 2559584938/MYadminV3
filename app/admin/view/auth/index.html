@@ -1,0 +1,149 @@
+{extend name="common/base" /}
+{block name="title"}权限管理{/block}
+{block name="css"}
+<link href="{__ADMIN_JS__}js/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<link href="{__ADMIN_JS__}js/jquery-confirm/jquery-confirm.min.css" rel="stylesheet">
+<link href="{__ADMIN_JS__}js/fontIconPicker/css/jquery.fonticonpicker.min.css" rel="stylesheet">
+<link href="{__ADMIN_JS__}js/fontIconPicker/themes/bootstrap-theme/jquery.fonticonpicker.bootstrap.min.css" rel="stylesheet" />
+{/block}
+{block name="body"}
+<div class="container-fluid p-t-15">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <div id="toolbar2" class="toolbar-btn-action">
+                        <button type="button" class="btn btn-primary m-r-5" data-toggle="modal" data-target="#exampleModalChange" data-whatever="0">新增</button>
+                        <button type="button" class="btn btn-primary m-r-5" onclick="test()">删除</button>
+                    </div>
+
+                    <table class="tree-table"></table>
+
+                    <div class="modal fade" id="exampleModalChange" tabindex="-1" role="dialog" aria-labelledby="exampleModalChangeLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h6 class="modal-title" id="exampleModalChangeTitle">发送消息</h6>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form onsubmit="return false" action="#!" method="post" id="form1">
+                                        <input type="hidden" name="id" value="0">
+                                        <div class="form-group">
+                                            <label for="type">上级规则</label>
+                                            <select name="type" class="form-control" id="type">
+                                                <option value="0">作为顶级规则</option>
+                                                {volist name=":set_recursion(getMenuData())" id="v"}
+                                                <option value="{$v.id}" {eq name="$v.pid" value="$v.id" }selected="" {/eq}>{$v.title} </option>
+                                                {/volist}
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="title" class="col-form-label">规则名称</label>
+                                            <input type="text" class="form-control" id="title" name="title" placeholder="请输入规则名称">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="title" class="col-form-label">规则类型</label>
+                                            <div class="clearfix">
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" id="statusTwo" name="ismenu" class="custom-control-input" value="0" checked>
+                                                    <label class="custom-control-label" for="statusTwo">链接</label>
+                                                </div>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" id="statusOne" name="ismenu" class="custom-control-input" value="1">
+                                                    <label class="custom-control-label" for="statusOne">按钮</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="title" class="col-form-label">规则URL</label>
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="请输入规则URL">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="title" class="col-form-label">菜单图标</label>
+                                            <div class="clearfix">
+                                                <input type="text" id="icon-example" name="icon" />
+                                                <span id="show-mdi"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="title" class="col-form-label">排序权重</label>
+                                            <input type="number" class="form-control" id="weight" name="weight" placeholder="请输入排序权重">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="title" class="col-form-label">规则类型</label>
+                                            <div class="clearfix">
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" id="isnavTwo" name="isnav" class="custom-control-input" value="1">
+                                                    <label class="custom-control-label" for="isnavTwo">是</label>
+                                                </div>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" id="isnavOne" name="isnav" class="custom-control-input" value="0" checked>
+                                                    <label class="custom-control-label" for="isnavOne">否</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                    <button type="button" class="btn btn-primary" onclick="post_submit()">保存</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+<script type="text/javascript" src="{__ADMIN_JS__}js/jquery-confirm/jquery-confirm.min.js"></script>
+<script type="text/javascript" src="{__ADMIN_JS__}js/bootstrap-table/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="{__ADMIN_JS__}js/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<!--以下是tree-grid的使用示例-->
+<link href="{__ADMIN_JS__}js/jquery-treegrid/jquery.treegrid.min.css" rel="stylesheet">
+<script type="text/javascript" src="{__ADMIN_JS__}js/jquery-treegrid/jquery.treegrid.min.js"></script>
+<script type="text/javascript" src="{__ADMIN_JS__}js/bootstrap-table/extensions/treegrid/bootstrap-table-treegrid.min.js"></script>
+
+<script type="text/javascript" src="{__ADMIN_JS__}js/fontIconPicker/jquery.fonticonpicker.min.js"></script>
+<script type="text/javascript" src="{__ADMIN_JS__}js/tong/auth.js"></script>
+{/block}
+{block name="script"}
+<script>
+    jQuery(document).ready(function($) {
+        var font_element = $('#icon-example').fontIconPicker({
+            theme: 'fip-bootstrap'
+        });
+
+        $.ajax({
+            url: '{__ADMIN_JS__}js/fontIconPicker/fontjson/materialdesignicons_v4.json',
+            type: 'GET',
+            dataType: 'json'
+        }).done(function(response) {
+
+            var fontello_json_icons = [];
+
+            $.each(response.glyphs, function(i, v) {
+                fontello_json_icons.push( v.css );
+            });
+
+            font_element.setIcons(fontello_json_icons);
+        }).fail(function() {
+            console.error('字体图标配置加载失败');
+        });
+
+        $(document).on('change', '#icon-example', function(){
+            //$('#show-mdi').html($(this).val());
+        });
+
+    });
+</script>
+{/block}

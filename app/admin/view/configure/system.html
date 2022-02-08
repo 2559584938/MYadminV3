@@ -1,0 +1,51 @@
+<div class="tab-pane active">
+
+    <form onsubmit="return false" action="#!" method="post" name="systemForm" class="edit-form" id="form1">
+        <input type="hidden" name="typename" value="system">
+        <div class="form-group">
+            <label for="title">网站标题</label>
+            <input class="form-control" type="text" id="title" name="title" value="{$sysconf.title|default=''}" placeholder="请输入网站首页标题">
+<!--            <small class="help-block">调用方式：<code>config('web_site_title')</code></small>-->
+        </div>
+        <div class="form-group">
+            <label for="webname">网站名称</label>
+            <input class="form-control" type="text" id="webname" name="webname" value="{$sysconf.webname|default=''}" placeholder="请输入网站名称">
+        </div>
+        <div class="form-group">
+            <label for="domain">网站域名</label>
+            <input class="form-control" type="text" id="domain" name="domain" value="{$sysconf.domain|default=''}" placeholder="请输入网站域名">
+        </div>
+        <div class="form-group file-group">
+            <label for="logo">LOGO图片</label>
+            <div class="input-group">
+                <input type="text" class="form-control file-value" name="logo" value="{$sysconf.logo|default=''}" placeholder="LOGO图片地址" />
+                <input type="file" accaccept=".png,.jpg,.jpeg,.bmp,.gif" class="d-none" />
+                <div class="input-group-append">
+                    <button class="btn btn-default file-browser" type="button">上传图片</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="keywords">站点关键词</label>
+            <input class="form-control" type="text" id="keywords" name="keywords" value="{$sysconf.keywords|default=''}" placeholder="多个关键词用英文状态 , 号分割">
+            <small class="help-block">网站搜索引擎关键字</small>
+        </div>
+        <div class="form-group">
+            <label for="description">站点描述</label>
+            <textarea class="form-control" id="description" rows="5" name="description" placeholder="请输入站点描述">{$sysconf.description|default=''}</textarea>
+            <small class="help-block">网站描述，有利于搜索引擎抓取相关信息</small>
+        </div>
+        <div class="form-group">
+            <label for="copyright">版权信息</label>
+            <input class="form-control" type="text" id="copyright" name="copyright" value="{$sysconf.copyright|default=''}" placeholder="请输入版权信息">
+        </div>
+        <div class="form-group">
+            <label for="miitbeian">备案信息</label>
+            <input class="form-control" type="text" id="miitbeian" name="miitbeian" value="{$sysconf.miitbeian|default=''}" placeholder="请输入备案信息">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary m-r-5" onclick="post_submit()">确 定</button>
+        </div>
+    </form>
+
+</div>

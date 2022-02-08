@@ -1,0 +1,42 @@
+<div class="tab-pane active">
+
+    <form onsubmit="return false" action="#!" method="post" name="storageForm" class="edit-form" id="form1">
+        <input type="hidden" name="typename" value="storage">
+        <div class="form-group">
+            <label for="engine">存储引擎</label>
+            <div class="clearfix">
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="statusTwo" name="engine" class="custom-control-input" value="1" {present name="storage.engine"}{eq name="storage.engine" value="1"}checked{/eq}{/present}>
+                    <label class="custom-control-label" for="statusTwo">本地(不推荐)</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="statusOne" name="engine" class="custom-control-input" value="2" {present name="storage.engine"}{eq name="storage.engine" value="2"}checked{/eq}{/present}>
+                    <label class="custom-control-label" for="statusOne">七牛云</label>
+                </div>
+            </div>
+        </div>
+        <div id="qiniu" style="display:none">
+            <div class="form-group">
+                <label for="accesskey">AccessKey</label>
+                <input class="form-control" type="text" id="accesskey" name="accesskey" value="{$storage.accesskey|default=''}" placeholder="请输入AccessKey">
+            </div>
+            <div class="form-group">
+                <label for="secretkey">SecretKey</label>
+                <input class="form-control" type="password" id="secretkey" name="secretkey" value="{$storage.secretkey|default=''}" placeholder="请输入SecretKey">
+            </div>
+            <div class="form-group">
+                <label for="secretkey">空间bucket</label>
+                <input class="form-control" type="text" id="bucket" name="bucket" value="{$storage.bucket|default=''}" placeholder="请输入空间bucket">
+            </div>
+            <div class="form-group">
+                <label for="domain">空间域名</label>
+                <input class="form-control" type="text" id="domain" name="domain" value="{$storage.domain|default=''}" placeholder="请输入空间域名">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary m-r-5" onclick="post_submit()">确 定</button>
+        </div>
+    </form>
+
+</div>

@@ -1,0 +1,26 @@
+<div class="tab-pane active">
+
+    <form onsubmit="return false" action="#!" method="post" name="weixinForm" class="edit-form" id="form1">
+        <input type="hidden" name="typename" value="weixin">
+        <div class="form-group">
+            <label for="appid">Appid</label>
+            <input class="form-control" type="text" id="appid" name="appid" value="{$weixin.appid|default=''}" placeholder="请输入Appid">
+        </div>
+        <div class="form-group">
+            <label for="appsecret">AppSecret</label>
+            <input class="form-control" type="password" id="appsecret" name="appsecret" value="{$weixin.appsecret|default=''}" placeholder="请输入AppSecret">
+        </div>
+        <div class="form-group">
+            <label for="token">Token</label>
+            <input class="form-control" type="text" id="token" name="token" value="{$weixin.token|default=''}" placeholder="请输入Token">
+        </div>
+        <div class="form-group">
+            <label for="AesKey">AesKey</label>
+            <input class="form-control" type="password" id="AesKey" name="AesKey" value="{$weixin.aeskey|default=''}" placeholder="请输入AesKey">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary m-r-5" onclick="post_submit()">确 定</button>
+        </div>
+    </form>
+
+</div>
